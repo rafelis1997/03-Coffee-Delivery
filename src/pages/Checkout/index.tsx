@@ -101,9 +101,10 @@ export function Checkout() {
       return setIsActive([false, false, isActiveButton])
     }
   }
+
   const navigate = useNavigate()
+
   function handleSubmitOrder(data: AdressFormData) {
-    navigate('/finish')
     let metodoDePagamento
 
     if (isActive[0] === true) {
@@ -114,21 +115,31 @@ export function Checkout() {
       metodoDePagamento = 'dinheiro'
     }
 
-    const order = {
-      ...data,
-      pagamento: metodoDePagamento,
-    }
+    if (cart.length > 0 && metodoDePagamento) {
+      navigate('/finish')
 
-    setAddress(order)
+      const order = {
+        ...data,
+        pagamento: metodoDePagamento,
+      }
+
+      setAddress(order)
+    } else {
+      alert(
+        cart.length === 0
+          ? 'Seu carrinho está vazio'
+          : 'Selecione um método de pagamento',
+      )
+    }
   }
 
   const { handleSubmit, register } = addressForm
 
   return (
-    <CheckoutContainer>
+    <CheckoutContainer onSubmit={handleSubmit(handleSubmitOrder)}>
       <CheckoutFormContainer>
         <h1>Complete seu pedido</h1>
-        <CheckoutForm onSubmit={handleSubmit(handleSubmitOrder)}>
+        <CheckoutForm>
           <div>
             <MapPinLine size={32} />
             <div>
@@ -185,7 +196,6 @@ export function Checkout() {
             id="estado"
             {...register('estado')}
           />
-          <SummaryButton type="submit">Confirmar Pedido</SummaryButton>
         </CheckoutForm>
 
         <PaymentContainer>
@@ -201,6 +211,7 @@ export function Checkout() {
 
           <PaymentButtonsContainer>
             <PaymentButton
+              type="button"
               onClick={(e) => handlePaymentSelection(e.currentTarget)}
               value="one"
               isActive={isActive[0]}
@@ -210,6 +221,7 @@ export function Checkout() {
             </PaymentButton>
 
             <PaymentButton
+              type="button"
               onClick={(e) => handlePaymentSelection(e.currentTarget)}
               value="two"
               isActive={isActive[1]}
@@ -219,6 +231,7 @@ export function Checkout() {
             </PaymentButton>
 
             <PaymentButton
+              type="button"
               onClick={(e) => handlePaymentSelection(e.currentTarget)}
               value="three"
               isActive={isActive[2]}
@@ -270,6 +283,7 @@ export function Checkout() {
               </h1>
             </TotalSummaryLables>
           </TotalSummaryContainer>
+          <SummaryButton type="submit">Confirmar Pedido</SummaryButton>
         </CartItemsSummary>
       </CartItensCheckoutContainer>
     </CheckoutContainer>

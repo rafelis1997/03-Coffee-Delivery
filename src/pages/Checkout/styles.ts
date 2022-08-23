@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.form`
   width: 100%;
   max-width: 1440px;
   display: flex;
@@ -22,7 +22,7 @@ export const CheckoutFormContainer = styled.div`
   }
 `
 
-export const CheckoutForm = styled.form`
+export const CheckoutForm = styled.div`
   display: flex;
   width: 100%;
   gap: 1rem;
