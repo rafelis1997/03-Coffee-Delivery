@@ -46,6 +46,7 @@ export const HeaderContainer = styled.header`
     width: 38px;
     height: 38px;
     font-size: 1rem;
+    position: relative;
 
     padding: 8px;
     border: 0;
@@ -60,6 +61,36 @@ export const HeaderContainer = styled.header`
 
     &:hover {
       background: ${(props) => props.theme['product-yellow']};
+    }
+
+    span {
+      padding: 2px;
+      border-radius: 99999px;
+      background: ${(props) => props.theme['product-yellow-dark']};
+      padding: 5px 8px;
+      position: absolute;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: ${(props) => props.theme.white};
+
+      z-index: 10;
+      top: -10px;
+      right: -10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+`
+export const LogoContainer = styled.div`
+  a {
+    width: fit-content;
+    padding: 4px;
+    cursor: pointer;
+    background: transparent;
+
+    &:hover {
+      background: transparent;
     }
   }
 `

@@ -1,50 +1,77 @@
 import { ShoppingCart } from 'phosphor-react'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { IncreaserQuantity } from '../../../../components/IncreaserQuantity'
+import { CartContext } from '../../../../context/CartContext'
 import {
+  CartButton,
   CoffeeContainer,
   CoffeeDescription,
   CoffeeForm,
   CoffeeFormContainer,
   CoffeeLabel,
-  NumberInput,
+  CoffeeLabelContainer,
 } from './styles'
 
-export function CoffeeItem() {
+interface CoffeeProps {
+  coffee: {
+    id: number
+    imgUrl: string
+    labels: string[]
+    title: string
+    subtitle: string
+    price: number
+  }
+}
+
+export function CoffeeItem({
+  coffee: { id, imgUrl, labels, title, subtitle, price },
+}: CoffeeProps) {
   const [quantity, setQuantity] = useState(1)
 
-  function handleProductCounterAdd() {
-    const newQuantity = quantity + 1
-    setQuantity(newQuantity)
-  }
+  const { cart, addItemToCart } = useContext(CartContext)
 
-  function handleProductCounterSubtract() {
-    if (quantity > 0) {
-      const newQuantity = quantity - 1
-      setQuantity(newQuantity)
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault()
+    const data = {
+      id,
+      imgUrl,
+      labels,
+      title,
+      subtitle,
+      price,
+      quantity,
     }
+
+    console.log(cart)
+
+    addItemToCart(data)
   }
 
   return (
     <CoffeeContainer>
-      <img src="CoffeeImages/Expresso.png" alt="" />
-      <CoffeeLabel>TRADICIONAL</CoffeeLabel>
+      <img src={imgUrl} alt="" />
+      <CoffeeLabelContainer>
+        {labels.map((l) => {
+          return <CoffeeLabel key={l}>{l}</CoffeeLabel>
+        })}
+      </CoffeeLabelContainer>
+
       <CoffeeDescription>
-        <h1>Expresso Tradicional</h1>
-        <span>O tradicional café feito com água quente e grãos moídos</span>
+        <h1>{title}</h1>
+        <span>{subtitle}</span>
       </CoffeeDescription>
       <CoffeeFormContainer>
         <span>
-          R$ <span>9,90</span>
+          R${' '}
+          <span>
+            {price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </span>
         </span>
-        <CoffeeForm>
-          <NumberInput>
-            <button onClick={handleProductCounterSubtract}>-</button>
-            <div>{quantity}</div>
-            <button onClick={handleProductCounterAdd}>+</button>
-          </NumberInput>
-          <button type="submit">
+        <CoffeeForm onSubmit={handleSubmit}>
+          <IncreaserQuantity quantity={quantity} setQuantity={setQuantity} />
+          <CartButton type="submit">
             <ShoppingCart size={20} weight="fill" />
-          </button>
+          </CartButton>
         </CoffeeForm>
       </CoffeeFormContainer>
     </CoffeeContainer>

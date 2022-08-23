@@ -5,6 +5,7 @@ export const HomeContainer = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-bottom: 100px;
 `
 
 export const HeroSection = styled.section`
@@ -57,15 +58,6 @@ export const HeroItemsContainer = styled.div`
       color: ${(props) => props.theme.white};
     }
 
-    p {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: ${(props) => props.theme['base-text']};
-      border-radius: 100%;
-      padding: 5px;
-    }
-
     span {
       font-size: 1rem;
     }
@@ -90,15 +82,61 @@ export const CoffeeContainer = styled.section`
       gap: 0.5rem;
       justify-content: center;
       align-items: center;
-
-      button {
-        padding: 6px 12px;
-        border: 1px solid ${(props) => props.theme['product-yellow-dark']};
-        border-radius: 16px;
-        color: ${(props) => props.theme['product-yellow-dark']};
-      }
     }
   }
 `
 
-export const CoffeeList = styled.div``
+export const CoffeeList = styled.div`
+  display: flex;
+  max-width: 1440px;
+  flex-wrap: wrap;
+  justify-content: center;
+`
+
+const ITEMS_BACKGROUND = {
+  dark_yellow: 'product-yellow-dark',
+  yellow: 'product-yellow',
+  dark: 'base-text',
+  purple: 'product-purple',
+} as const
+
+interface heroItemsProps {
+  itemsColor: keyof typeof ITEMS_BACKGROUND
+}
+
+export const HeroItems = styled.p<heroItemsProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.theme['base-text']};
+  border-radius: 100%;
+  padding: 5px;
+
+  background: ${(props) => props.theme[ITEMS_BACKGROUND[props.itemsColor]]};
+`
+
+interface selectedFiltersProps {
+  isSelected: boolean
+}
+
+export const ButtonFilter = styled.button<selectedFiltersProps>`
+  padding: 6px 12px;
+  border: 2px solid ${(props) => props.theme['product-yellow-dark']};
+  border-radius: 16px;
+  color: ${(props) =>
+    props.isSelected
+      ? props.theme.background
+      : props.theme['product-yellow-dark']};
+  font-weight: 700;
+
+  background: ${(props) =>
+    props.isSelected
+      ? props.theme['product-yellow-dark']
+      : props.theme.background};
+
+  transition: background, color 0.2s ease-in-out;
+
+  &:hover {
+    background: ${(props) => props.theme['product-yellow-light']};
+  }
+`

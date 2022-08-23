@@ -10,6 +10,8 @@ export const CoffeeContainer = styled.div`
   align-items: center;
 
   padding: 1.25rem;
+  margin: 0 2rem;
+  margin-bottom: 3rem;
 
   border-radius: 6px 36px 6px 36px;
 
@@ -34,6 +36,11 @@ export const CoffeeLabel = styled.span`
   color: ${(props) => props.theme['product-yellow-dark']};
   border-radius: 15px;
   padding: 4px 8px;
+  text-transform: uppercase;
+`
+export const CoffeeLabelContainer = styled.div`
+  display: flex;
+  gap: 0.25rem;
 `
 
 export const CoffeeDescription = styled.div`
@@ -43,6 +50,8 @@ export const CoffeeDescription = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 20px;
+
+  text-align: center;
 
   h1 {
     font-size: 1.25rem;
@@ -78,50 +87,27 @@ export const CoffeeForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1.5rem;
+  height: 100%;
   gap: 0.5rem;
 
   input {
     width: 2rem;
   }
-
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    background: ${(props) => props.theme['product-purple-dark']};
-    color: ${(props) => props.theme['base-card']};
-    border: 0;
-    border-radius: 6px;
-  }
 `
-export const NumberInput = styled.div`
-  border: 2px solid #ddd;
-  display: inline-flex;
 
-  input[type='number'] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
-  }
+export const CartButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  background: ${(props) => props.theme['product-purple-dark']};
+  color: ${(props) => props.theme['base-card']};
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
 
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-  }
-
-  button {
-    outline: none;
-    -webkit-appearance: none;
-    background-color: #eeeeee;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    cursor: pointer;
-    margin: 0;
-    position: relative;
-    padding: 0;
+  &:hover {
+    background: ${(props) => props.theme['product-purple']};
   }
 `
